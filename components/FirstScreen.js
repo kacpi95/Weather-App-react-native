@@ -16,3 +16,17 @@ export default function FirstScreen() {
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    position: 'relative',
+  },
+  imageBackground: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+  },
+  safeArea: {
+    flex: 1,
+  },
+});
