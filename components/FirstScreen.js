@@ -54,7 +54,7 @@ export default function FirstScreen() {
             </TouchableOpacity>
           </View>
           {locations.length > 0 && showSearch ? (
-            <View>
+            <View style={styles.locationsList}>
               {locations.map((loc, index) => {
                 let showBorder = index + 1 != locations.length;
                 let borderStyle = showBorder ? styles.locationItemBorder : {};
@@ -62,9 +62,10 @@ export default function FirstScreen() {
                   <TouchableOpacity
                     onPress={() => handleLocation(loc)}
                     key={index}
+                    style={[styles.locationItem, borderStyle]}
                   >
                     <MapPinIcon size={20} color='gray' />
-                    <Text>Kraków, Polska</Text>
+                    <Text style={styles.locationText}>Kraków, Polska</Text>
                   </TouchableOpacity>
                 );
               })}
@@ -115,5 +116,28 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     padding: 12,
     margin: 4,
+  },
+  locationsList: {
+    position: 'absolute',
+    width: '100%',
+    backgroundColor: '#D1D5DB',
+    top: 64,
+    borderRadius: 24,
+  },
+  locationItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    paddingHorizontal: 16,
+    marginBottom: 4,
+  },
+  locationItemBorder: {
+    borderBottomWidth: 2,
+    borderBottomColor: '#6B7280',
+  },
+  locationText: {
+    color: 'black',
+    fontSize: 18,
+    marginLeft: 8,
   },
 });
