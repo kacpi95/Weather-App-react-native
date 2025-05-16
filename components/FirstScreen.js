@@ -4,15 +4,22 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Text,
 } from 'react-native';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
+import { MapPinIcon } from 'react-native-heroicons/solid';
 
 export default function FirstScreen() {
   const [showSearch, setSearch] = useState(false);
+  const [locations, setLocations] = useState([1, 2]);
+
+  const handleLocation = (loc) => {
+    console.log('location:', loc);
+  };
   return (
     <View style={styles.container}>
       <StatusBar style='light' />
@@ -46,6 +53,23 @@ export default function FirstScreen() {
               <MagnifyingGlassIcon size={25} color='black' />
             </TouchableOpacity>
           </View>
+          {locations.length > 0 && showSearch ? (
+            <View>
+              {locations.map((loc, index) => {
+                let showBorder = index + 1 != locations.length;
+                let borderStyle = showBorder ? styles.locationItemBorder : {};
+                return (
+                  <TouchableOpacity
+                    onPress={() => handleLocation(loc)}
+                    key={index}
+                  >
+                    <MapPinIcon size={20} color='gray' />
+                    <Text>Kraków, Polska</Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          ) : null}
         </View>
       </SafeAreaView>
     </View>
