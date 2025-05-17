@@ -72,6 +72,12 @@ export default function FirstScreen() {
             </View>
           ) : null}
         </View>
+        <View style={styles.weatherContainer}>
+          <Text style={styles.locationText}>
+            Kraków,
+            <Text style={styles.countryText}>Polska</Text>
+          </Text>
+        </View>
       </SafeAreaView>
     </View>
   );
