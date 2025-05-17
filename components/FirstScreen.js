@@ -75,8 +75,14 @@ export default function FirstScreen() {
         <View style={styles.weatherContainer}>
           <Text style={styles.locationText}>
             Kraków,
-            <Text style={styles.countryText}>Polska</Text>
+            <Text style={styles.countryText}> Polska</Text>
           </Text>
+          <View style={styles.weatherImageContainer}>
+            <Image
+              source={require('../assets/images/cloudy-day.png')}
+              style={styles.weatherImage}
+            />
+          </View>
         </View>
       </SafeAreaView>
     </View>
