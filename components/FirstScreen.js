@@ -83,6 +83,10 @@ export default function FirstScreen() {
               style={styles.weatherImage}
             />
           </View>
+          <View style={styles.weatherInfo}>
+            <Text style={styles.temperature}>10&#176;</Text>
+            <Text style={styles.description}>Pochmurnie</Text>
+          </View>
         </View>
       </SafeAreaView>
     </View>
@@ -168,5 +172,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: 'white',
+  },
+  weatherImageContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  weatherImage: {
+    width: 208,
+    height: 208,
   },
 });
