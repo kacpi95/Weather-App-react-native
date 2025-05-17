@@ -146,4 +146,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 8,
   },
+  weatherContainer: {
+    flex: 1,
+    justifyContent: 'space-around',
+    marginHorizontal: 16,
+    marginBottom: 8,
+  },
+  locationText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  countryText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: 'white',
+  },
 });
