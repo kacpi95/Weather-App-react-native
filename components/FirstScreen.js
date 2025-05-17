@@ -181,4 +181,20 @@ const styles = StyleSheet.create({
     width: 208,
     height: 208,
   },
+  weatherInfo: {
+    gap: 8,
+  },
+  temperature: {
+    fontSize: 64,
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginLeft: 20,
+  },
+  description: {
+    color: 'white',
+    fontSize: 20,
+    letterSpacing: 1,
+    textAlign: 'center',
+  },
 });
