@@ -111,7 +111,9 @@ export default function FirstScreen() {
           <View style={styles.forecastContainer}>
             <View style={styles.forecastHeader}>
               <CalendarDaysIcon size={22} color={'white'} />
-              <Text style={styles.forecastHeaderText}>Progonza na 5 dni</Text>
+              <Text style={styles.forecastHeaderText}>
+                5- dniowa prognoza pogody
+              </Text>
             </View>
           </View>
         </View>
@@ -253,5 +255,19 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: '600',
+  },
+  forecastContainer: {
+    marginBottom: 8,
+    gap: 12,
+  },
+  forecastHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 20,
+    gap: 8,
+  },
+  forecastHeaderText: {
+    color: 'white',
+    fontSize: 16,
   },
 });
