@@ -10,7 +10,10 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { useState } from 'react';
-import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
+import {
+  CalendarDaysIcon,
+  MagnifyingGlassIcon,
+} from 'react-native-heroicons/outline';
 import { MapPinIcon } from 'react-native-heroicons/solid';
 
 export default function FirstScreen() {
@@ -103,6 +106,12 @@ export default function FirstScreen() {
             <View style={styles.statItem}>
               <Text style={styles.statText}>Szansa na deszcz</Text>
               <Text style={styles.statTextData}>44%</Text>
+            </View>
+          </View>
+          <View style={styles.forecastContainer}>
+            <View style={styles.forecastHeader}>
+              <CalendarDaysIcon size={22} color={'white'} />
+              <Text style={styles.forecastHeaderText}>Progonza na 5 dni</Text>
             </View>
           </View>
         </View>
