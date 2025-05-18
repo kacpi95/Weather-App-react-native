@@ -24,7 +24,7 @@ export default function FirstScreen() {
     <View style={styles.container}>
       <StatusBar style='light' />
       <Image
-        source={require('../assets/images/tlo.jpg')}
+        source={require('../assets/images/sky.jpg')}
         style={styles.imageBackground}
       />
       <SafeAreaView style={styles.safeArea}>
@@ -86,6 +86,24 @@ export default function FirstScreen() {
           <View style={styles.weatherInfo}>
             <Text style={styles.temperature}>10&#176;</Text>
             <Text style={styles.description}>Pochmurnie</Text>
+          </View>
+          <View style={styles.statsContainer}>
+            <View style={styles.statItem}>
+              <Text style={styles.statText}>Wilgotność</Text>
+              <Text style={styles.stateTextData}>50%</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text style={styles.statText}>Odczuwalna</Text>
+              <Text style={styles.stateTextData}>10&#176;</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text style={styles.statText}>Ciśnienie</Text>
+              <Text style={styles.stateTextData}>1014mbar</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text style={styles.statText}>Szansa na deszcz</Text>
+              <Text style={styles.stateTextData}>44%</Text>
+            </View>
           </View>
         </View>
       </SafeAreaView>
