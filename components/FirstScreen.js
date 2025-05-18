@@ -117,9 +117,8 @@ export default function FirstScreen() {
               </Text>
             </View>
             <ScrollView
-              horizontal
               contentContainerStyle={styles.scrollContainer}
-              showsHorizontalScrollIndicator={false}
+              showsHorizontalScrollIndicator={true}
             >
               <View style={styles.forecastCard}>
                 <Image
@@ -284,5 +283,37 @@ const styles = StyleSheet.create({
   forecastHeaderText: {
     color: 'white',
     fontSize: 16,
+  },
+  scrollContainer: {
+    paddingHorizontal: 15,
+  },
+  forecastCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 24,
+    backgroundColor: 'rgba(255, 255, 255, 0.21)',
+    marginBottom: 12,
+  },
+
+  forecastImage: {
+    width: 44,
+    height: 44,
+  },
+
+  forecastDay: {
+    color: 'white',
+    fontSize: 16,
+    flex: 1,
+    textAlign: 'center',
+  },
+
+  forecastTemp: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: '600',
   },
 });
