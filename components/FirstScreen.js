@@ -122,11 +122,43 @@ export default function FirstScreen() {
             >
               <View style={styles.forecastCard}>
                 <Image
-                  source={require('../assets/images/cloudy-day.png')}
+                  source={require('../assets/images/rainy-day.png')}
                   style={styles.forecastImage}
                 />
                 <Text style={styles.forecastDay}>Poniedziałek</Text>
                 <Text style={styles.forecastTemp}>10&#176;</Text>
+              </View>
+              <View style={styles.forecastCard}>
+                <Image
+                  source={require('../assets/images/sunny.png')}
+                  style={styles.forecastImage}
+                />
+                <Text style={styles.forecastDay}>Wtorek</Text>
+                <Text style={styles.forecastTemp}>13&#176;</Text>
+              </View>
+              <View style={styles.forecastCard}>
+                <Image
+                  source={require('../assets/images/cloudy-day.png')}
+                  style={styles.forecastImage}
+                />
+                <Text style={styles.forecastDay}>Środa</Text>
+                <Text style={styles.forecastTemp}>15&#176;</Text>
+              </View>
+              <View style={styles.forecastCard}>
+                <Image
+                  source={require('../assets/images/rainy-day.png')}
+                  style={styles.forecastImage}
+                />
+                <Text style={styles.forecastDay}>Czwartek</Text>
+                <Text style={styles.forecastTemp}>12&#176;</Text>
+              </View>
+              <View style={styles.forecastCard}>
+                <Image
+                  source={require('../assets/images/sunny.png')}
+                  style={styles.forecastImage}
+                />
+                <Text style={styles.forecastDay}>Piątek</Text>
+                <Text style={styles.forecastTemp}>9&#176;</Text>
               </View>
             </ScrollView>
           </View>
@@ -271,6 +303,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   forecastContainer: {
+    flex: 1,
     marginBottom: 8,
     gap: 12,
   },
