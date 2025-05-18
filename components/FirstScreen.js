@@ -90,19 +90,19 @@ export default function FirstScreen() {
           <View style={styles.statsContainer}>
             <View style={styles.statItem}>
               <Text style={styles.statText}>Wilgotność</Text>
-              <Text style={styles.stateTextData}>50%</Text>
+              <Text style={styles.statTextData}>50%</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statText}>Odczuwalna</Text>
-              <Text style={styles.stateTextData}>10&#176;</Text>
+              <Text style={styles.statTextData}>10&#176;</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statText}>Ciśnienie</Text>
-              <Text style={styles.stateTextData}>1014mbar</Text>
+              <Text style={styles.statTextData}>1014mbar</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statText}>Szansa na deszcz</Text>
-              <Text style={styles.stateTextData}>44%</Text>
+              <Text style={styles.statTextData}>44%</Text>
             </View>
           </View>
         </View>
@@ -214,5 +214,35 @@ const styles = StyleSheet.create({
     fontSize: 20,
     letterSpacing: 1,
     textAlign: 'center',
+  },
+  statsContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 12,
+    borderRadius: 24,
+    backgroundColor: 'rgba(255, 255, 255, 0.21)',
+  },
+  statItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    justifyContent: 'space-between',
+    width: '90%',
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255,255,255,0.3)',
+    paddingBottom: 5,
+  },
+  statText: {
+    marginLeft: 0,
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  statTextData: {
+    marginRight: 0,
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
