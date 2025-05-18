@@ -15,6 +15,7 @@ import {
   MagnifyingGlassIcon,
 } from 'react-native-heroicons/outline';
 import { MapPinIcon } from 'react-native-heroicons/solid';
+import { ScrollView } from 'react-native';
 
 export default function FirstScreen() {
   const [showSearch, setSearch] = useState(false);
@@ -115,6 +116,20 @@ export default function FirstScreen() {
                 5- dniowa prognoza pogody
               </Text>
             </View>
+            <ScrollView
+              horizontal
+              contentContainerStyle={styles.scrollContainer}
+              showsHorizontalScrollIndicator={false}
+            >
+              <View style={styles.forecastCard}>
+                <Image
+                  source={require('../assets/images/cloudy-day.png')}
+                  style={styles.forecastImage}
+                />
+                <Text style={styles.forecastDay}>Poniedziałek</Text>
+                <Text style={styles.forecastTemp}>10&#176;</Text>
+              </View>
+            </ScrollView>
           </View>
         </View>
       </SafeAreaView>
