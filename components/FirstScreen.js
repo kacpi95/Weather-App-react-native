@@ -17,6 +17,7 @@ import {
 import { MapPinIcon } from 'react-native-heroicons/solid';
 import { ScrollView } from 'react-native';
 import { fetchLocations } from '../api/weatherApi';
+import { debounce } from 'lodash';
 
 export default function FirstScreen() {
   const [showSearch, setSearch] = useState(false);
