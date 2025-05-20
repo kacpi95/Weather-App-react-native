@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { useState } from 'react';
@@ -16,6 +16,7 @@ import {
 } from 'react-native-heroicons/outline';
 import { MapPinIcon } from 'react-native-heroicons/solid';
 import { ScrollView } from 'react-native';
+import { fetchLocations } from '../api/weatherApi';
 
 export default function FirstScreen() {
   const [showSearch, setSearch] = useState(false);
@@ -24,6 +25,14 @@ export default function FirstScreen() {
   const handleLocation = (loc) => {
     console.log('location:', loc);
   };
+  const handleSearch = (value) => {
+    if (value.length > 2) {
+      fetchLocations({ cityName: value }).then((data) => {
+        setLocations(data);
+      });
+    }
+  };
+  const handleTextDebounce = useCallback(debounce(handleSearch, 1200), []);
   return (
     <View style={styles.container}>
       <StatusBar style='light' />
@@ -45,6 +54,7 @@ export default function FirstScreen() {
           >
             {showSearch ? (
               <TextInput
+                onChange={handleTextDebounce}
                 placeholder='Szukaj miasta'
                 placeholderTextColor={'lightgray'}
                 style={styles.input}
@@ -200,7 +210,7 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
     flex: 1,
     fontSize: 16,
-    color: 'white',
+    color: 'black',
   },
   searchButton: {
     backgroundColor: 'rgb(255, 255, 255)',
