@@ -102,23 +102,24 @@ export default function FirstScreen() {
         </View>
         <View style={styles.weatherContainer}>
           <Text style={styles.locationText}>
-            {location?.name},
+            {location?.name}
             <Text style={styles.countryText}> {location?.country}</Text>
           </Text>
           <View style={styles.weatherImageContainer}>
             <Image
-              source={require('../assets/images/cloudy-day.png')}
+              // source={require('../assets/images/cloudy-day.png')}
+              source={{ uri: 'https:' + current?.condition?.icon }} ////////////    zmiana icon na tło
               style={styles.weatherImage}
             />
           </View>
           <View style={styles.weatherInfo}>
-            <Text style={styles.temperature}>10&#176;</Text>
-            <Text style={styles.description}>Pochmurnie</Text>
+            <Text style={styles.temperature}>{current?.temp_c}&#176;</Text>
+            <Text style={styles.description}>{current?.condition?.text}</Text>
           </View>
           <View style={styles.statsContainer}>
             <View style={styles.statItem}>
               <Text style={styles.statText}>Wilgotność</Text>
-              <Text style={styles.statTextData}>50%</Text>
+              <Text style={styles.statTextData}>{current?.humidity}%</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statText}>Odczuwalna</Text>
@@ -126,11 +127,13 @@ export default function FirstScreen() {
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statText}>Ciśnienie</Text>
-              <Text style={styles.statTextData}>1014mbar</Text>
+              <Text style={styles.statTextData}>
+                {current?.pressure_mb}mbar
+              </Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statText}>Szansa na deszcz</Text>
-              <Text style={styles.statTextData}>44%</Text>
+              <Text style={styles.statTextData}>{current?.precip_mm}%</Text>
             </View>
           </View>
           <View style={styles.forecastContainer}>
