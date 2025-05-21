@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
+import { debounce } from 'lodash';
 import React, { useCallback } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
@@ -16,15 +17,24 @@ import {
 } from 'react-native-heroicons/outline';
 import { MapPinIcon } from 'react-native-heroicons/solid';
 import { ScrollView } from 'react-native';
-import { fetchLocations } from '../api/weatherApi';
-import { debounce } from 'lodash';
+import { fetchLocations, fetchWeatherForecast } from '../api/weatherApi';
 
 export default function FirstScreen() {
   const [showSearch, setSearch] = useState(false);
-  const [locations, setLocations] = useState([1, 2]);
+  const [locations, setLocations] = useState([]);
+  const [weather, setWeather] = useState({});
 
   const handleLocation = (loc) => {
     console.log('location:', loc);
+    setLocations([]);
+    setSearch(false);
+    fetchWeatherForecast({
+      cityName: loc.name,
+      days: '5',
+    }).then((data) => {
+      setWeather(data);
+      console.log('forc', data);
+    });
   };
   const handleSearch = (value) => {
     if (value.length > 2) {
@@ -34,6 +44,7 @@ export default function FirstScreen() {
     }
   };
   const handleTextDebounce = useCallback(debounce(handleSearch, 1200), []);
+  const { current, location } = weather;
   return (
     <View style={styles.container}>
       <StatusBar style='light' />
@@ -55,7 +66,7 @@ export default function FirstScreen() {
           >
             {showSearch ? (
               <TextInput
-                onChange={handleTextDebounce}
+                onChangeText={handleTextDebounce}
                 placeholder='Szukaj miasta'
                 placeholderTextColor={'lightgray'}
                 style={styles.input}
@@ -80,7 +91,9 @@ export default function FirstScreen() {
                     style={[styles.locationItem, borderStyle]}
                   >
                     <MapPinIcon size={20} color='gray' />
-                    <Text style={styles.locationText}>Kraków, Polska</Text>
+                    <Text style={styles.locationText}>
+                      {loc?.name}, {loc?.country}
+                    </Text>
                   </TouchableOpacity>
                 );
               })}
@@ -89,8 +102,8 @@ export default function FirstScreen() {
         </View>
         <View style={styles.weatherContainer}>
           <Text style={styles.locationText}>
-            Kraków,
-            <Text style={styles.countryText}> Polska</Text>
+            {location?.name},
+            <Text style={styles.countryText}> {location?.country}</Text>
           </Text>
           <View style={styles.weatherImageContainer}>
             <Image
