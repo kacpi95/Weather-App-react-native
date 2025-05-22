@@ -15,6 +15,8 @@ import {
   CalendarDaysIcon,
   MagnifyingGlassIcon,
   ClockIcon,
+  SunIcon,
+  MoonIcon,
 } from 'react-native-heroicons/outline';
 import { MapPinIcon } from 'react-native-heroicons/solid';
 import { ScrollView } from 'react-native';
@@ -57,7 +59,7 @@ export default function FirstScreen() {
     });
   };
   const handleTextDebounce = useCallback(debounce(handleSearch, 1200), []);
-  const { current, location } = weather;
+  const { current, location, forecast } = weather;
   return (
     <View style={styles.container}>
       <StatusBar style='light' />
@@ -214,6 +216,26 @@ export default function FirstScreen() {
                   )
                 )}
               </ScrollView>
+            </View>
+            <View style={styles.box}>
+              <View style={styles.astronomyIconContainer}>
+                <View style={styles.astronomyHeader}>
+                  <SunIcon size={22} color={'white'} />
+                  <Text style={styles.astronomyText}>Wschód słońca</Text>
+                </View>
+                <Text style={styles.astronomyHours}>
+                  {forecast?.forecastday[0]?.astro?.sunrise}
+                </Text>
+              </View>
+              <View style={styles.astronomyIconContainer}>
+                <View style={styles.astronomyHeader}>
+                  <MoonIcon size={22} color={'white'} />
+                  <Text style={styles.astronomyText}>Zachód słońca</Text>
+                </View>
+                <Text style={styles.astronomyHours}>
+                  {forecast?.forecastday[0]?.astro?.sunset}
+                </Text>
+              </View>
             </View>
           </View>
         </ScrollView>
