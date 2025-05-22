@@ -163,7 +163,26 @@ export default function FirstScreen() {
               contentContainerStyle={styles.scrollContainer}
               showsHorizontalScrollIndicator={true}
             >
-              <View style={styles.forecastCard}>
+              {weather?.forecast?.forecastday?.map((item, index) => {
+                let date = new Date(item.date);
+                let options = { weekday: 'long' };
+                let dayName = date.toLocaleDateString('pl-Pl', options);
+                dayName = dayName.split(',')[0];
+                return (
+                  <View style={styles.forecastCard} key={index}>
+                    <Image
+                      // source={require('../assets/images/rainy-day.png')}
+                      source={{ uri: 'https:' + current?.condition?.icon }}
+                      style={styles.forecastImage}
+                    />
+                    <Text style={styles.forecastDay}>{dayName}</Text>
+                    <Text style={styles.forecastTemp}>
+                      {Math.round(item?.day?.avgtemp_c)}&#176;
+                    </Text>
+                  </View>
+                );
+              })}
+              {/* <View style={styles.forecastCard}>
                 <Image
                   source={require('../assets/images/rainy-day.png')}
                   style={styles.forecastImage}
@@ -202,7 +221,7 @@ export default function FirstScreen() {
                 />
                 <Text style={styles.forecastDay}>Piątek</Text>
                 <Text style={styles.forecastTemp}>9&#176;</Text>
-              </View>
+              </View> */}
             </ScrollView>
           </View>
         </View>
