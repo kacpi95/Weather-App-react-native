@@ -7,7 +7,7 @@ import {
   Text,
 } from 'react-native';
 import { debounce } from 'lodash';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { useState } from 'react';
@@ -42,6 +42,18 @@ export default function FirstScreen() {
         setLocations(data);
       });
     }
+  };
+  useEffect(() => {
+    fetchMyWeatherData();
+  }, []);
+
+  const fetchMyWeatherData = async () => {
+    fetchWeatherForecast({
+      cityName: 'Warszawa',
+      days: '5',
+    }).then((data) => {
+      setWeather(data);
+    });
   };
   const handleTextDebounce = useCallback(debounce(handleSearch, 1200), []);
   const { current, location } = weather;
@@ -113,7 +125,9 @@ export default function FirstScreen() {
             />
           </View>
           <View style={styles.weatherInfo}>
-            <Text style={styles.temperature}>{current?.temp_c}&#176;</Text>
+            <Text style={styles.temperature}>
+              {Math.round(current?.temp_c)}&#176;
+            </Text>
             <Text style={styles.description}>{current?.condition?.text}</Text>
           </View>
           <View style={styles.statsContainer}>
@@ -123,7 +137,9 @@ export default function FirstScreen() {
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statText}>Odczuwalna</Text>
-              <Text style={styles.statTextData}>10&#176;</Text>
+              <Text style={styles.statTextData}>
+                {Math.round(current?.feelslike_c)}&#176;
+              </Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statText}>Ciśnienie</Text>
