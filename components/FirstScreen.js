@@ -217,23 +217,43 @@ export default function FirstScreen() {
                 )}
               </ScrollView>
             </View>
-            <View style={styles.box}>
-              <View style={styles.astronomyIconContainer}>
-                <View style={styles.astronomyHeader}>
-                  <SunIcon size={22} color={'white'} />
-                  <Text style={styles.astronomyText}>Wschód słońca</Text>
+            <View style={styles.rowContainer}>
+              <View style={styles.box}>
+                <View style={styles.astronomyIconContainer}>
+                  <View style={styles.astronomyHeader}>
+                    <SunIcon size={22} color={'white'} />
+                    <Text style={styles.astronomyText}>Wschód słońca</Text>
+                  </View>
+                  <Text style={styles.astronomyHours}>
+                    {forecast?.forecastday[0]?.astro?.sunrise}
+                  </Text>
                 </View>
-                <Text style={styles.astronomyHours}>
-                  {forecast?.forecastday[0]?.astro?.sunrise}
-                </Text>
+                <View style={styles.astronomyIconContainer}>
+                  <View style={styles.astronomyHeader}>
+                    <MoonIcon size={22} color={'white'} />
+                    <Text style={styles.astronomyText}>Zachód słońca</Text>
+                  </View>
+                  <Text style={styles.astronomyHours}>
+                    {forecast?.forecastday[0]?.astro?.sunset}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.astronomyIconContainer}>
-                <View style={styles.astronomyHeader}>
-                  <MoonIcon size={22} color={'white'} />
-                  <Text style={styles.astronomyText}>Zachód słońca</Text>
-                </View>
-                <Text style={styles.astronomyHours}>
-                  {forecast?.forecastday[0]?.astro?.sunset}
+              <View style={styles.box}>
+                <Text style={styles.astronomyText}>Jakość powietrza</Text>
+                <Text style={styles.airQuality}>
+                  PM2.5: {weather?.current?.air_quality?.['pm2_5']} µg/m³
+                </Text>
+                <Text style={styles.airQuality}>
+                  PM10: {weather?.current?.air_quality?.['pm10']} µg/m³
+                </Text>
+                <Text style={styles.airQuality}>
+                  NO₂: {weather?.current?.air_quality?.['no2']} µg/m³
+                </Text>
+                <Text style={styles.airQuality}>
+                  SO₂: {weather?.current?.air_quality?.['so2']} µg/m³
+                </Text>
+                <Text style={styles.airQuality}>
+                  EPA Index: {weather?.current?.air_quality?.['us-epa-index']}
                 </Text>
               </View>
             </View>
