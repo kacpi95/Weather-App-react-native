@@ -241,19 +241,16 @@ export default function FirstScreen() {
               <View style={styles.box}>
                 <Text style={styles.astronomyText}>Jakość powietrza</Text>
                 <Text style={styles.airQuality}>
-                  PM2.5: {weather?.current?.air_quality?.['pm2_5']} µg/m³
+                  PM2.5 : {Math.round(current?.air_quality?.pm2_5)} µg/m³
                 </Text>
                 <Text style={styles.airQuality}>
-                  PM10: {weather?.current?.air_quality?.['pm10']} µg/m³
+                  PM10 : {Math.round(current?.air_quality?.pm10)} µg/m³
                 </Text>
                 <Text style={styles.airQuality}>
-                  NO₂: {weather?.current?.air_quality?.['no2']} µg/m³
+                  NO₂ : {Math.round(current?.air_quality?.no2)} µg/m³
                 </Text>
                 <Text style={styles.airQuality}>
-                  SO₂: {weather?.current?.air_quality?.['so2']} µg/m³
-                </Text>
-                <Text style={styles.airQuality}>
-                  EPA Index: {weather?.current?.air_quality?.['us-epa-index']}
+                  SO₂ : {Math.round(current?.air_quality?.so2)} µg/m³
                 </Text>
               </View>
             </View>
