@@ -446,4 +446,44 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
   },
+  astronomyIconContainer: {
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  astronomyHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  astronomyText: {
+    color: 'white',
+    fontSize: 16,
+    marginLeft: 6,
+    fontWeight: 'bold',
+  },
+  astronomyHours: {
+    marginTop: 8,
+    color: 'white',
+    fontSize: 14,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    marginTop: 20,
+  },
+  box: {
+    flex: 1,
+    marginHorizontal: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.21)',
+    padding: 10,
+    borderRadius: 10,
+  },
+  airQuality: {
+    marginTop: 8,
+    color: 'white',
+    fontSize: 14,
+    textAlign: 'center',
+  },
 });
