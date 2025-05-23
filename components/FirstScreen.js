@@ -23,6 +23,7 @@ import { ScrollView } from 'react-native';
 import { fetchLocations, fetchWeatherForecast } from '../api/weatherApi';
 import AirQualityBox from './AirQualityBox';
 import SunMoonBox from './SunMoonBox';
+import WeatherStats from './WeatherStats';
 
 export default function FirstScreen() {
   const [showSearch, setSearch] = useState(false);
@@ -139,28 +140,6 @@ export default function FirstScreen() {
               </Text>
               <Text style={styles.description}>{current?.condition?.text}</Text>
             </View>
-            <View style={styles.statsContainer}>
-              <View style={styles.statItem}>
-                <Text style={styles.statText}>Wilgotność</Text>
-                <Text style={styles.statTextData}>{current?.humidity}%</Text>
-              </View>
-              <View style={styles.statItem}>
-                <Text style={styles.statText}>Odczuwalna</Text>
-                <Text style={styles.statTextData}>
-                  {Math.round(current?.feelslike_c)}&#176;
-                </Text>
-              </View>
-              <View style={styles.statItem}>
-                <Text style={styles.statText}>Ciśnienie</Text>
-                <Text style={styles.statTextData}>
-                  {current?.pressure_mb}mbar
-                </Text>
-              </View>
-              <View style={styles.statItem}>
-                <Text style={styles.statText}>Szansa na deszcz</Text>
-                <Text style={styles.statTextData}>{current?.precip_mm}%</Text>
-              </View>
-            </View>
             <View style={styles.forecastContainer}>
               <View style={styles.forecastHeader}>
                 <CalendarDaysIcon size={22} color={'white'} />
@@ -219,6 +198,7 @@ export default function FirstScreen() {
                 )}
               </ScrollView>
             </View>
+            <WeatherStats weatStat={current} />
             <View style={styles.rowContainer}>
               <SunMoonBox
                 sunset={forecast?.forecastday[0]?.astro?.sunset}
