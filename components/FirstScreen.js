@@ -21,6 +21,8 @@ import {
 import { MapPinIcon } from 'react-native-heroicons/solid';
 import { ScrollView } from 'react-native';
 import { fetchLocations, fetchWeatherForecast } from '../api/weatherApi';
+import AirQualityBox from './AirQualityBox';
+import SunMoonBox from './SunMoonBox';
 
 export default function FirstScreen() {
   const [showSearch, setSearch] = useState(false);
@@ -218,41 +220,11 @@ export default function FirstScreen() {
               </ScrollView>
             </View>
             <View style={styles.rowContainer}>
-              <View style={styles.box}>
-                <View style={styles.astronomyIconContainer}>
-                  <View style={styles.astronomyHeader}>
-                    <SunIcon size={22} color={'white'} />
-                    <Text style={styles.astronomyText}>Wschód słońca</Text>
-                  </View>
-                  <Text style={styles.astronomyHours}>
-                    {forecast?.forecastday[0]?.astro?.sunrise}
-                  </Text>
-                </View>
-                <View style={styles.astronomyIconContainer}>
-                  <View style={styles.astronomyHeader}>
-                    <MoonIcon size={22} color={'white'} />
-                    <Text style={styles.astronomyText}>Zachód słońca</Text>
-                  </View>
-                  <Text style={styles.astronomyHours}>
-                    {forecast?.forecastday[0]?.astro?.sunset}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.box}>
-                <Text style={styles.astronomyText}>Jakość powietrza</Text>
-                <Text style={styles.airQuality}>
-                  PM2.5 : {Math.round(current?.air_quality?.pm2_5)} µg/m³
-                </Text>
-                <Text style={styles.airQuality}>
-                  PM10 : {Math.round(current?.air_quality?.pm10)} µg/m³
-                </Text>
-                <Text style={styles.airQuality}>
-                  NO₂ : {Math.round(current?.air_quality?.no2)} µg/m³
-                </Text>
-                <Text style={styles.airQuality}>
-                  SO₂ : {Math.round(current?.air_quality?.so2)} µg/m³
-                </Text>
-              </View>
+              <SunMoonBox
+                sunset={forecast?.forecastday[0]?.astro?.sunset}
+                sunrise={forecast?.forecastday[0]?.astro?.sunrise}
+              />
+              <AirQualityBox airQuality={current?.air_quality} />
             </View>
           </View>
         </ScrollView>
@@ -443,44 +415,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
   },
-  astronomyIconContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  astronomyHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 4,
-  },
-  astronomyText: {
-    color: 'white',
-    fontSize: 16,
-    marginLeft: 6,
-    fontWeight: 'bold',
-  },
-  astronomyHours: {
-    marginTop: 8,
-    color: 'white',
-    fontSize: 14,
-  },
   rowContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
     marginTop: 20,
-  },
-  box: {
-    flex: 1,
-    marginHorizontal: 5,
-    backgroundColor: 'rgba(255, 255, 255, 0.21)',
-    padding: 10,
-    borderRadius: 10,
-  },
-  airQuality: {
-    marginTop: 8,
-    color: 'white',
-    fontSize: 14,
-    textAlign: 'center',
   },
 });
