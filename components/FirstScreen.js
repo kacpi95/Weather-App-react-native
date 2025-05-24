@@ -26,6 +26,8 @@ import SunMoonBox from './SunMoonBox';
 import WeatherStats from './WeatherStats';
 import HoursForecast from './HoursForecast';
 import DaysForecast from './DaysForecast';
+import CurrentWeather from './CurrentWeather';
+import LocationList from './LocationList';
 
 export default function FirstScreen() {
   const [showSearch, setSearch] = useState(false);
@@ -104,44 +106,18 @@ export default function FirstScreen() {
               </TouchableOpacity>
             </View>
             {locations.length > 0 && showSearch ? (
-              <View style={styles.locationsList}>
-                {locations.map((loc, index) => {
-                  let showBorder = index + 1 != locations.length;
-                  let borderStyle = showBorder ? styles.locationItemBorder : {};
-                  return (
-                    <TouchableOpacity
-                      onPress={() => handleLocation(loc)}
-                      key={index}
-                      style={[styles.locationItem, borderStyle]}
-                    >
-                      <MapPinIcon size={20} color='gray' />
-                      <Text style={styles.locationText}>
-                        {loc?.name}, {loc?.country}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
+              <LocationList
+                locations={locations}
+                handleLocation={handleLocation}
+              />
             ) : null}
           </View>
           <View style={styles.weatherContainer}>
-            <Text style={styles.locationText}>
-              {location?.name}
-              <Text style={styles.countryText}> {location?.country}</Text>
-            </Text>
-            <View style={styles.weatherImageContainer}>
-              <Image
-                // source={require('../assets/images/cloudy-day.png')}
-                source={{ uri: 'https:' + current?.condition?.icon }} ////////////    zmiana icon na tło
-                style={styles.weatherImage}
-              />
-            </View>
-            <View style={styles.weatherInfo}>
-              <Text style={styles.temperature}>
-                {Math.round(current?.temp_c)}&#176;
-              </Text>
-              <Text style={styles.description}>{current?.condition?.text}</Text>
-            </View>
+            <CurrentWeather
+              location={location}
+              current={current}
+              condition={current?.condition}
+            />
             <DaysForecast
               days={weather?.forecast?.forecastday}
               icon={current}
@@ -203,69 +179,11 @@ const styles = StyleSheet.create({
     padding: 12,
     margin: 4,
   },
-  locationsList: {
-    position: 'absolute',
-    width: '100%',
-    backgroundColor: '#D1D5DB',
-    top: 64,
-    borderRadius: 24,
-  },
-  locationItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 12,
-    paddingHorizontal: 16,
-    marginBottom: 4,
-  },
-  locationItemBorder: {
-    borderBottomWidth: 2,
-    borderBottomColor: '#6B7280',
-  },
-  locationText: {
-    color: 'black',
-    fontSize: 18,
-    marginLeft: 8,
-  },
   weatherContainer: {
     flex: 1,
     justifyContent: 'space-around',
     marginHorizontal: 16,
     marginBottom: 8,
-  },
-  locationText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  countryText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: 'white',
-  },
-  weatherImageContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  weatherImage: {
-    width: 208,
-    height: 208,
-  },
-  weatherInfo: {
-    gap: 8,
-  },
-  temperature: {
-    fontSize: 64,
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginLeft: 20,
-  },
-  description: {
-    color: 'white',
-    fontSize: 20,
-    letterSpacing: 1,
-    textAlign: 'center',
   },
   rowContainer: {
     flexDirection: 'row',
