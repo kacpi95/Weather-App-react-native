@@ -2,34 +2,23 @@ import {
   View,
   SafeAreaView,
   Image,
-  TextInput,
-  TouchableOpacity,
-  Text,
+  StyleSheet,
+  ScrollView,
 } from 'react-native';
 import { debounce } from 'lodash';
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
-import { useState } from 'react';
-import {
-  CalendarDaysIcon,
-  MagnifyingGlassIcon,
-  ClockIcon,
-  SunIcon,
-  MoonIcon,
-} from 'react-native-heroicons/outline';
-import { MapPinIcon } from 'react-native-heroicons/solid';
-import { ScrollView } from 'react-native';
 import { fetchLocations, fetchWeatherForecast } from '../api/weatherApi';
-import AirQualityBox from './AirQualityBox';
-import SunMoonBox from './SunMoonBox';
-import WeatherStats from './WeatherStats';
-import HoursForecast from './HoursForecast';
-import DaysForecast from './DaysForecast';
-import CurrentWeather from './CurrentWeather';
-import LocationList from './LocationList';
+import AirQualityBox from '../components/Weather/AirQualityBox';
+import SunMoonBox from '../components/Weather/SunMoonBox';
+import WeatherStats from '../components/Weather/WeatherStats';
+import HoursForecast from '../components/Forecast/HoursForecast';
+import DaysForecast from '../components/Forecast/DaysForecast';
+import CurrentWeather from '../components/Weather/CurrentWeather';
+import LocationList from '../components/UI/LocationList';
+import SearchBar from '../components/UI/SearchBar';
 
-export default function FirstScreen() {
+export default function HomeScreen() {
   const [showSearch, setSearch] = useState(false);
   const [locations, setLocations] = useState([]);
   const [weather, setWeather] = useState({});
@@ -80,31 +69,11 @@ export default function FirstScreen() {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.searchContainer}>
-            <View
-              style={[
-                styles.searchBox,
-                {
-                  backgroundColor: showSearch
-                    ? 'rgb(255, 255, 255)'
-                    : 'transparent',
-                },
-              ]}
-            >
-              {showSearch ? (
-                <TextInput
-                  onChangeText={handleTextDebounce}
-                  placeholder='Szukaj miasta'
-                  placeholderTextColor={'lightgray'}
-                  style={styles.input}
-                />
-              ) : null}
-              <TouchableOpacity
-                onPress={() => setSearch(!showSearch)}
-                style={styles.searchButton}
-              >
-                <MagnifyingGlassIcon size={25} color='black' />
-              </TouchableOpacity>
-            </View>
+            <SearchBar
+              showSearch={showSearch}
+              setSearch={setSearch}
+              onChangeText={handleTextDebounce}
+            />
             {locations.length > 0 && showSearch ? (
               <LocationList
                 locations={locations}
@@ -158,26 +127,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     position: 'relative',
     zIndex: 50,
-  },
-  searchBox: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    borderRadius: 50,
-  },
-  input: {
-    paddingLeft: 24,
-    height: 40,
-    paddingBottom: 4,
-    flex: 1,
-    fontSize: 16,
-    color: 'black',
-  },
-  searchButton: {
-    backgroundColor: 'rgb(255, 255, 255)',
-    borderRadius: 50,
-    padding: 12,
-    margin: 4,
   },
   weatherContainer: {
     flex: 1,
