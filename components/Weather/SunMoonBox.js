@@ -23,15 +23,14 @@ export default function SunMoonBox({ sunrise, sunset }) {
 const styles = StyleSheet.create({
   box: {
     flex: 1,
-    marginHorizontal: 5,
-    backgroundColor: 'rgba(255, 255, 255, 0.21)',
-    padding: 10,
-    borderRadius: 10,
+    marginRight: 6,
+    backgroundColor: 'rgba(255, 255, 255, 0.18)',
+    padding: 14,
+    borderRadius: 16,
   },
   astronomyIconContainer: {
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 10,
+    marginVertical: 12,
   },
   astronomyHeader: {
     flexDirection: 'row',
@@ -41,12 +40,14 @@ const styles = StyleSheet.create({
   astronomyText: {
     color: 'white',
     fontSize: 16,
-    marginLeft: 6,
-    fontWeight: 'bold',
+    marginLeft: 8,
+    fontWeight: '600',
   },
   astronomyHours: {
-    marginTop: 8,
+    marginTop: 4,
+    marginBottom: 5,
     color: 'white',
-    fontSize: 14,
+    fontSize: 15,
+    fontWeight: '500',
   },
 });

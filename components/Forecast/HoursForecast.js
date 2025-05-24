@@ -17,12 +17,14 @@ export default function HoursForecast({ hours }) {
       >
         {hours?.map((hourItem, index) => (
           <View key={index} style={styles.hourCard}>
-            <Text>{hourItem.time.split(' ')[1]}</Text>
+            <Text style={styles.hourText}>{hourItem.time.split(' ')[1]}</Text>
             <Image
               source={{ uri: 'https:' + hourItem.condition.icon }}
               style={{ width: 40, height: 40 }}
             />
-            <Text>{Math.round(hourItem.temp_c)}&#176;</Text>
+            <Text style={styles.tempText}>
+              {Math.round(hourItem.temp_c)}&#176;
+            </Text>
           </View>
         ))}
       </ScrollView>
@@ -30,10 +32,41 @@ export default function HoursForecast({ hours }) {
   );
 }
 const styles = StyleSheet.create({
+  forecastContainerHours: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
   forecastHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 20,
+    marginBottom: 12,
+    marginHorizontal: 16,
     gap: 8,
+  },
+  forecastHeaderText: {
+    fontSize: 18,
+    color: 'white',
+    fontWeight: '600',
+  },
+  hourCard: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    marginRight: 12,
+    width: 80,
+  },
+  hourText: {
+    fontSize: 14,
+    color: 'white',
+    marginBottom: 4,
+  },
+  tempText: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: '500',
+    marginTop: 4,
   },
 });

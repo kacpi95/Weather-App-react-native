@@ -22,21 +22,23 @@ export default function AirQualityBox({ airQuality }) {
 const styles = StyleSheet.create({
   box: {
     flex: 1,
-    marginHorizontal: 5,
-    backgroundColor: 'rgba(255, 255, 255, 0.21)',
-    padding: 10,
-    borderRadius: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.18)',
+    padding: 14,
+    borderRadius: 16,
   },
   astronomyText: {
     color: 'white',
     fontSize: 16,
-    marginLeft: 6,
-    fontWeight: 'bold',
+    fontWeight: '600',
+    marginBottom: 10,
+    textAlign: 'center',
   },
   airQuality: {
-    marginTop: 8,
     color: 'white',
     fontSize: 14,
+    fontWeight: '400',
+    marginVertical: 2,
+    marginBottom: 10,
     textAlign: 'center',
   },
 });
