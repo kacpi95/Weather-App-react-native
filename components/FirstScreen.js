@@ -24,6 +24,8 @@ import { fetchLocations, fetchWeatherForecast } from '../api/weatherApi';
 import AirQualityBox from './AirQualityBox';
 import SunMoonBox from './SunMoonBox';
 import WeatherStats from './WeatherStats';
+import HoursForecast from './HoursForecast';
+import DaysForecast from './DaysForecast';
 
 export default function FirstScreen() {
   const [showSearch, setSearch] = useState(false);
@@ -140,64 +142,11 @@ export default function FirstScreen() {
               </Text>
               <Text style={styles.description}>{current?.condition?.text}</Text>
             </View>
-            <View style={styles.forecastContainer}>
-              <View style={styles.forecastHeader}>
-                <CalendarDaysIcon size={22} color={'white'} />
-                <Text style={styles.forecastHeaderText}>
-                  5- dniowa prognoza pogody
-                </Text>
-              </View>
-              <ScrollView
-                contentContainerStyle={styles.scrollContainer}
-                showsHorizontalScrollIndicator={true}
-              >
-                {weather?.forecast?.forecastday?.map((item, index) => {
-                  let date = new Date(item.date);
-                  let options = { weekday: 'long' };
-                  let dayName = date.toLocaleDateString('pl-Pl', options);
-                  dayName = dayName.split(',')[0];
-                  return (
-                    <View style={styles.forecastCard} key={index}>
-                      <Image
-                        // source={require('../assets/images/rainy-day.png')}
-                        source={{ uri: 'https:' + current?.condition?.icon }}
-                        style={styles.forecastImage}
-                      />
-                      <Text style={styles.forecastDay}>{dayName}</Text>
-                      <Text style={styles.forecastTemp}>
-                        {Math.round(item?.day?.avgtemp_c)}&#176;
-                      </Text>
-                    </View>
-                  );
-                })}
-              </ScrollView>
-            </View>
-            <View style={styles.forecastContainerHours}>
-              <View style={styles.forecastHeader}>
-                <ClockIcon size={22} color={'white'} />
-                <Text style={styles.forecastHeaderText}>
-                  24- godzinna prognoza pogody
-                </Text>
-              </View>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ paddingHorizontal: 16 }}
-              >
-                {weather?.forecast?.forecastday[0]?.hour.map(
-                  (hourItem, index) => (
-                    <View key={index} style={styles.hourCard}>
-                      <Text>{hourItem.time.split(' ')[1]}</Text>
-                      <Image
-                        source={{ uri: 'https:' + hourItem.condition.icon }}
-                        style={{ width: 40, height: 40 }}
-                      />
-                      <Text>{Math.round(hourItem.temp_c)}&#176;</Text>
-                    </View>
-                  )
-                )}
-              </ScrollView>
-            </View>
+            <DaysForecast
+              days={weather?.forecast?.forecastday}
+              icon={current}
+            />
+            <HoursForecast hours={weather?.forecast?.forecastday[0]?.hour} />
             <WeatherStats weatStat={current} />
             <View style={styles.rowContainer}>
               <SunMoonBox
@@ -317,83 +266,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     letterSpacing: 1,
     textAlign: 'center',
-  },
-  statsContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 12,
-    borderRadius: 24,
-    backgroundColor: 'rgba(255, 255, 255, 0.21)',
-  },
-  statItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    justifyContent: 'space-between',
-    width: '90%',
-    paddingHorizontal: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.3)',
-    paddingBottom: 5,
-  },
-  statText: {
-    marginLeft: 0,
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  statTextData: {
-    marginRight: 0,
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  forecastContainer: {
-    flex: 1,
-    marginBottom: 8,
-    gap: 12,
-  },
-  forecastHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 20,
-    gap: 8,
-  },
-  forecastHeaderText: {
-    color: 'white',
-    fontSize: 16,
-  },
-  scrollContainer: {
-    paddingHorizontal: 15,
-  },
-  forecastCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 24,
-    backgroundColor: 'rgba(255, 255, 255, 0.21)',
-    marginBottom: 12,
-  },
-
-  forecastImage: {
-    width: 44,
-    height: 44,
-  },
-
-  forecastDay: {
-    color: 'white',
-    fontSize: 16,
-    flex: 1,
-    textAlign: 'center',
-  },
-
-  forecastTemp: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: '600',
   },
   rowContainer: {
     flexDirection: 'row',
