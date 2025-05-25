@@ -17,6 +17,7 @@ import DaysForecast from '../components/Forecast/DaysForecast';
 import CurrentWeather from '../components/Weather/CurrentWeather';
 import LocationList from '../components/UI/LocationList';
 import SearchBar from '../components/UI/SearchBar';
+import { getData, sotreData } from '../utils/storage';
 
 export default function HomeScreen() {
   const [showSearch, setSearch] = useState(false);
@@ -24,7 +25,6 @@ export default function HomeScreen() {
   const [weather, setWeather] = useState({});
 
   const handleLocation = (loc) => {
-    console.log('location:', loc);
     setLocations([]);
     setSearch(false);
     fetchWeatherForecast({
@@ -32,7 +32,7 @@ export default function HomeScreen() {
       days: '5',
     }).then((data) => {
       setWeather(data);
-      console.log('forc', data);
+      sotreData('city', loc.name);
     });
   };
   const handleSearch = (value) => {
@@ -47,8 +47,11 @@ export default function HomeScreen() {
   }, []);
 
   const fetchMyWeatherData = async () => {
+    let myCity = await getData('city');
+    let cityName = 'Warszawa';
+    if (myCity) cityName = myCity;
     fetchWeatherForecast({
-      cityName: 'Warszawa',
+      cityName,
       days: '5',
     }).then((data) => {
       setWeather(data);
@@ -65,7 +68,7 @@ export default function HomeScreen() {
       />
       <SafeAreaView style={styles.safeArea}>
         <ScrollView
-          contentContainerStyle={{ paddingBottom: 40 }}
+          contentContainerStyle={{ paddingBottom: 140 }}
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.searchContainer}>
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchContainer: {
-    marginTop: 30,
+    marginTop: 50,
     height: '7%',
     marginHorizontal: 16,
     position: 'relative',
