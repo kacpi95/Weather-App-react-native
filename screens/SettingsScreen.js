@@ -1,18 +1,35 @@
-import { View, Text, Switch, StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, Switch, StyleSheet } from 'react-native';
 import { useTheme } from '../components/GlobalSettings/ThemeContext';
-
+import { useState } from 'react';
 
 export default function SettingsScreen() {
   const { isDarkMode, toggleTheme } = useTheme();
+  const [information, setinformation] = useState(false);
+
+  const toggleInformation = () => setinformation((prev) => !prev);
+
   return (
     <View style={[styles.container, isDarkMode && styles.containerDark]}>
       <Text style={[styles.header, isDarkMode && styles.textDark]}>
         Ustawienia
       </Text>
       <View style={styles.row}>
-        <Text style={[styles.label, isDarkMode && styles.textDark]}></Text>
+        <Text style={[styles.label, isDarkMode && styles.textDark]}>
+          Tryb ciemny
+        </Text>
+        <Switch value={isDarkMode} onValueChange={toggleTheme} />
       </View>
-      <Switch value={isDarkMode} onValueChange={toggleTheme} />
+      <View style={styles.row}>
+        <Text style={[styles.label, isDarkMode && styles.textDark]}>
+          Powiadomienia
+        </Text>
+        <Switch value={information} onValueChange={toggleInformation} />
+      </View>
+      <View style={styles.row}>
+        <Text style={[styles.subtext, isDarkMode && styles.textDark]}>
+          Wersja aplikacji: 1.0.0
+        </Text>
+      </View>
       <View style={styles.row}>
         <Text style={[styles.subtext, isDarkMode && styles.textDark]}>
           Aplikacja pogodowa. Autor: Kacper
@@ -21,6 +38,7 @@ export default function SettingsScreen() {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -38,11 +56,13 @@ const styles = StyleSheet.create({
   },
   row: {
     marginBottom: 24,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   label: {
     fontSize: 16,
     color: '#333',
-    marginBottom: 4,
   },
   subtext: {
     fontSize: 14,
