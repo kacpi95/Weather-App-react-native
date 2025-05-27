@@ -22,35 +22,38 @@ export default function AboutScreen() {
   ];
 
   return (
-    <ScrollView style={[styles.container, isDarkMode && styles.containerDark]}>
-      <Text style={[styles.header, isDarkMode && styles.textDark]}>
-        O aplikacji
-      </Text>
+    <ScrollView
+      style={[styles.container, isDarkMode && styles.containerDark]}
+      contentContainerStyle={{ paddingBottom: 40 }}
+    >
+      <StyledText style={styles.header}>O aplikacji</StyledText>
 
-      <Text style={[styles.text, isDarkMode && styles.textDark]}>
+      <StyledText style={styles.text}>
         Aplikacja pogodowa napisana w technologii
         <Text style={styles.bold}> React Native</Text>. Umożliwia użytkownikowi:
-      </Text>
+      </StyledText>
 
       <View style={styles.list}>
         {allList.map((item) => (
-          <StyledText key={item.id}>{item.title}</StyledText>
+          <StyledText style={styles.text} key={item.id}>
+            {item.title}
+          </StyledText>
         ))}
       </View>
 
-      <Text style={[styles.subheader, isDarkMode && styles.textDark]}>
-        Technologie i narzędzia:
-      </Text>
+      <StyledText style={styles.subheader}>Technologie i narzędzia:</StyledText>
 
       <View style={styles.list}>
         {allListItems.map((item) => (
-          <StyledText key={item.id}>{item.title}</StyledText>
+          <StyledText style={styles.text} key={item.id}>
+            {item.title}
+          </StyledText>
         ))}
       </View>
 
-      <Text style={[styles.text, isDarkMode && styles.textDark]}>
+      <StyledText style={styles.text}>
         Autor: <Text style={styles.bold}>Kacper</Text>
-      </Text>
+      </StyledText>
 
       <Text
         style={[styles.link, isDarkMode && styles.textLinkDark]}
@@ -61,9 +64,7 @@ export default function AboutScreen() {
         GitHub Kacper
       </Text>
 
-      <Text style={[styles.version, isDarkMode && styles.textDark]}>
-        Wersja: 1.0.0
-      </Text>
+      <StyledText style={styles.version}>Wersja: 1.0.0</StyledText>
     </ScrollView>
   );
 }
