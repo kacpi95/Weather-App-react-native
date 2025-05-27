@@ -1,8 +1,25 @@
 import { View, StyleSheet, Text, Linking, ScrollView } from 'react-native';
 import { useTheme } from '../components/GlobalSettings/ThemeContext';
+import StyledText from '../components/UI/StyledText';
 
 export default function AboutScreen() {
   const { isDarkMode } = useTheme();
+  const allList = [
+    { id: 1, title: '• Wyszukiwanie lokalizacji' },
+    { id: 2, title: '• Wyświetlanie prognozy na 5 dni' },
+    { id: 3, title: '• Godzinowa i dzienna prognoza' },
+    { id: 4, title: '• Jakość powietrza (Air Quality)' },
+    { id: 5, title: '• Wschód i zachód słońca' },
+    { id: 6, title: '• Tryb jasny i ciemny (Dark Mode)' },
+  ];
+  const allListItems = [
+    { id: 1, title: '• React Native + Expo' },
+    { id: 2, title: '• React Navigation' },
+    { id: 3, title: '• Context API (motyw)' },
+    { id: 4, title: '• OpenWeatherMap API' },
+    { id: 5, title: '• AsyncStorage' },
+    { id: 6, title: '• Lodash (debounce)' },
+  ];
 
   return (
     <ScrollView style={[styles.container, isDarkMode && styles.containerDark]}>
@@ -12,53 +29,23 @@ export default function AboutScreen() {
 
       <Text style={[styles.text, isDarkMode && styles.textDark]}>
         Aplikacja pogodowa napisana w technologii
-        <Text style={styles.bold}>React Native</Text>. Umożliwia użytkownikowi:
+        <Text style={styles.bold}> React Native</Text>. Umożliwia użytkownikowi:
       </Text>
 
       <View style={styles.list}>
-        <Text style={[styles.listItem, isDarkMode && styles.textDark]}>
-          • Wyszukiwanie lokalizacji
-        </Text>
-        <Text style={[styles.listItem, isDarkMode && styles.textDark]}>
-          • Wyświetlanie prognozy na 5 dni
-        </Text>
-        <Text style={[styles.listItem, isDarkMode && styles.textDark]}>
-          • Godzinowa i dzienna prognoza
-        </Text>
-        <Text style={[styles.listItem, isDarkMode && styles.textDark]}>
-          • Jakość powietrza (Air Quality)
-        </Text>
-        <Text style={[styles.listItem, isDarkMode && styles.textDark]}>
-          • Wschód i zachód słońca
-        </Text>
-        <Text style={[styles.listItem, isDarkMode && styles.textDark]}>
-          • Tryb jasny i ciemny (Dark Mode)
-        </Text>
+        {allList.map((item) => (
+          <StyledText key={item.id}>{item.title}</StyledText>
+        ))}
       </View>
 
-      <Text style={[styles.text, isDarkMode && styles.textDark]}>
-        Zastosowane technologie i narzędzia:
+      <Text style={[styles.subheader, isDarkMode && styles.textDark]}>
+        Technologie i narzędzia:
       </Text>
 
       <View style={styles.list}>
-        <Text style={[styles.listItem, isDarkMode && styles.textDark]}>
-          • React Native + Expo
-        </Text>
-        <Text style={[styles.listItem, isDarkMode && styles.textDark]}>
-          • React Navigation
-        </Text>
-        <Text style={[styles.listItem, isDarkMode && styles.textDark]}>
-          • Context API (motyw)
-        </Text>
-        <Text style={[styles.listItem, isDarkMode && styles.textDark]}>
-          • OpenWeatherMap API
-        </Text>
-        <Text style={[styles.listItem, isDarkMode && styles.textDark]}>
-          • AsyncStorage
-        </Text>
-        <Text style={[styles.listItem, isDarkMode && styles.textDark]}>
-          • Lodash (debounce)
-        </Text>
+        {allListItems.map((item) => (
+          <StyledText key={item.id}>{item.title}</StyledText>
+        ))}
       </View>
 
       <Text style={[styles.text, isDarkMode && styles.textDark]}>
@@ -81,4 +68,54 @@ export default function AboutScreen() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: '#f2f2f2',
+  },
+  containerDark: {
+    backgroundColor: '#1e1e1e',
+  },
+  header: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  subheader: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginTop: 12,
+    marginBottom: 10,
+  },
+  text: {
+    fontSize: 16,
+    marginBottom: 14,
+    color: '#333',
+    lineHeight: 24,
+  },
+  list: {
+    marginLeft: 10,
+    marginBottom: 16,
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
+  version: {
+    marginTop: 30,
+    fontSize: 14,
+    color: '#888',
+  },
+  link: {
+    color: '#007bff',
+    textDecorationLine: 'underline',
+    fontSize: 16,
+    marginTop: 14,
+  },
+  textDark: {
+    color: '#fff',
+  },
+  textLinkDark: {
+    color: '#82bfff',
+  },
+});
