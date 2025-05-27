@@ -1,9 +1,10 @@
 import {
   View,
   SafeAreaView,
-  Image,
   StyleSheet,
   ScrollView,
+  TouchableOpacity,
+  Text,
 } from 'react-native';
 import { debounce } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
@@ -18,11 +19,16 @@ import CurrentWeather from '../components/Weather/CurrentWeather';
 import LocationList from '../components/UI/LocationList';
 import SearchBar from '../components/UI/SearchBar';
 import { getData, sotreData } from '../utils/storage';
+import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '../components/GlobalSettings/ThemeContext';
 
 export default function HomeScreen() {
   const [showSearch, setSearch] = useState(false);
   const [locations, setLocations] = useState([]);
   const [weather, setWeather] = useState({});
+
+  const navigation = useNavigation();
+  const { isDarkMode } = useTheme();
 
   const handleLocation = (loc) => {
     setLocations([]);
@@ -60,17 +66,19 @@ export default function HomeScreen() {
   const handleTextDebounce = useCallback(debounce(handleSearch, 1200), []);
   const { current, location, forecast } = weather;
   return (
-    <View style={styles.container}>
-      <StatusBar style='light' />
-      <Image
-        // source={require('../assets/images/sky.jpg')}
-        style={styles.imageBackground}
-      />
+    <View style={[styles.container, isDarkMode && styles.containerDark]}>
+      <StatusBar style={isDarkMode ? 'light' : 'dark'} />
       <SafeAreaView style={styles.safeArea}>
         <ScrollView
           contentContainerStyle={{ paddingBottom: 140 }}
           showsVerticalScrollIndicator={false}
         >
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Settings')}
+            style={styles.settingsButton}
+          >
+            <Text style={styles.settingsButtonText}>Ustawienia</Text>
+          </TouchableOpacity>
           <View style={styles.searchContainer}>
             <SearchBar
               showSearch={showSearch}
@@ -114,6 +122,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
+    backgroundColor: 'rgb(51, 139, 211)',
+  },
+  containerDark: {
+    backgroundColor: '#1e1e1e',
   },
   imageBackground: {
     position: 'absolute',
@@ -142,5 +154,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 10,
     marginTop: 20,
+  },
+  settingsButton: {
+    alignSelf: 'flex-end',
+    marginTop: 40,
+    marginRight: 20,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+  },
+
+  settingsButtonText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '500',
   },
 });
