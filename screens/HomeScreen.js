@@ -79,6 +79,12 @@ export default function HomeScreen() {
           >
             <Text style={styles.settingsButtonText}>Ustawienia</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('About')}
+            style={styles.settingsButton}
+          >
+            <Text style={styles.settingsButtonText}>O aplikacji</Text>
+          </TouchableOpacity>
           <View style={styles.searchContainer}>
             <SearchBar
               showSearch={showSearch}
