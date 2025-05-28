@@ -34,4 +34,23 @@ export default function LoginScreen() {
     </View>
   );
 }
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 24,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 6,
+    padding: 12,
+    marginBottom: 16,
+  },
+});
