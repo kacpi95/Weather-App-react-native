@@ -1,8 +1,17 @@
 import axios from 'axios';
 import { apiKey, weatherApi } from './index';
 
-const forecastEndpoint = (params) =>
-  `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${params.cityName}&days=${params.days}&aqi=yes&alerts=no&lang=pl`;
+// const forecastEndpoint = (params) =>
+//   `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${params.cityName}&days=${params.days}&aqi=yes&alerts=no&lang=pl`;
+
+const forecastEndpoint = (params) => {
+  const query =
+    params.coords?.lat && params.coords?.lon
+      ? `${params.coords.lat},${params.coords.lon}`
+      : params.cityName;
+
+  return `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${query}&days=${params.days}&aqi=yes&alerts=no&lang=pl`;
+};
 const locationEndpoint = (params) =>
   `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${params.cityName}`;
 

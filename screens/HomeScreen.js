@@ -18,9 +18,10 @@ import DaysForecast from '../components/Forecast/DaysForecast';
 import CurrentWeather from '../components/Weather/CurrentWeather';
 import LocationList from '../components/UI/LocationList';
 import SearchBar from '../components/UI/SearchBar';
-import { getData, sotreData } from '../utils/storage';
+import { getData, storeData } from '../utils/storage';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../components/GlobalSettings/ThemeContext';
+import * as Location from 'expo-location';
 
 export default function HomeScreen() {
   const [showSearch, setSearch] = useState(false);
@@ -38,7 +39,7 @@ export default function HomeScreen() {
       days: '5',
     }).then((data) => {
       setWeather(data);
-      sotreData('city', loc.name);
+      storeData('city', loc.name);
     });
   };
   const handleSearch = (value) => {
@@ -49,7 +50,40 @@ export default function HomeScreen() {
     }
   };
   useEffect(() => {
-    fetchMyWeatherData();
+    (async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+
+        if (status !== 'granted') {
+          console.log(
+            'Brak dostępu do lokalizacji. Wczytywanie domyślnego miasta'
+          );
+          fetchMyWeatherData();
+          return;
+        }
+
+        const loc = await Location.getCurrentPositionAsync({});
+        const coords = {
+          lat: loc.coords.latitude,
+          lon: loc.coords.longitude,
+        };
+
+        const data = await fetchWeatherForecast({
+          coords,
+          days: '5',
+        });
+
+        if (data) {
+          setWeather(data);
+          storeData('city', data.location.name);
+        } else {
+          fetchMyWeatherData();
+        }
+      } catch (error) {
+        console.error('Błąd podczas pobierania lokalizacji:', error);
+        fetchMyWeatherData();
+      }
+    })();
   }, []);
 
   const fetchMyWeatherData = async () => {
