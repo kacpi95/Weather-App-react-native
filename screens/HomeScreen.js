@@ -5,11 +5,11 @@ import {
   ScrollView,
   TouchableOpacity,
   Text,
+  RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
-import { debounce } from 'lodash';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { fetchLocations, fetchWeatherForecast } from '../api/weatherApi';
 import AirQualityBox from '../components/Weather/AirQualityBox';
 import SunMoonBox from '../components/Weather/SunMoonBox';
 import WeatherStats from '../components/Weather/WeatherStats';
@@ -18,84 +18,27 @@ import DaysForecast from '../components/Forecast/DaysForecast';
 import CurrentWeather from '../components/Weather/CurrentWeather';
 import LocationList from '../components/UI/LocationList';
 import SearchBar from '../components/UI/SearchBar';
-import { getData, storeData } from '../utils/storage';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../components/GlobalSettings/ThemeContext';
-import * as Location from 'expo-location';
 import * as Notifications from 'expo-notifications';
+import UseWeather from '../CustomHook/UseWeather';
 
 export default function HomeScreen() {
-  const [showSearch, setSearch] = useState(false);
-  const [locations, setLocations] = useState([]);
-  const [weather, setWeather] = useState({});
-  const [isOffline, setIsOffline] = useState(false);
-
   const navigation = useNavigation();
   const { isDarkMode } = useTheme();
-
-  const handleLocation = (loc) => {
-    setLocations([]);
-    setSearch(false);
-    fetchWeatherForecast({
-      cityName: loc.name,
-      days: '5',
-    }).then((data) => {
-      setWeather(data);
-      storeData('weatherData', data);
-      storeData('city', loc.name);
-    });
-  };
-  const handleSearch = (value) => {
-    if (value.length > 2) {
-      fetchLocations({ cityName: value }).then((data) => {
-        setLocations(data);
-      });
-    }
-  };
-  useEffect(() => {
-    (async () => {
-      const savedData = await getData('weatherData');
-      if (savedData) {
-        setWeather(savedData);
-        setIsOffline(true);
-      }
-
-      try {
-        const { status } = await Location.requestForegroundPermissionsAsync();
-
-        if (status !== 'granted') {
-          console.log(
-            'Brak dostępu do lokalizacji. Wczytywanie domyślnego miasta'
-          );
-          fetchMyWeatherData();
-          return;
-        }
-
-        const loc = await Location.getCurrentPositionAsync({});
-        const coords = {
-          lat: loc.coords.latitude,
-          lon: loc.coords.longitude,
-        };
-
-        const data = await fetchWeatherForecast({
-          coords,
-          days: '5',
-        });
-
-        if (data) {
-          setWeather(data);
-          setIsOffline(false);
-          storeData('weatherData', data);
-          storeData('city', data.location.name);
-        } else {
-          fetchMyWeatherData();
-        }
-      } catch (error) {
-        console.error('Błąd podczas pobierania lokalizacji:', error);
-        fetchMyWeatherData();
-      }
-    })();
-  }, []);
+  const {
+    weather,
+    isOffline,
+    loading,
+    error,
+    refreshing,
+    onRefresh,
+    handleLocation,
+    handleTextDebounce,
+    showSearch,
+    setSearch,
+    locations,
+  } = UseWeather();
 
   useEffect(() => {
     const registerForPushNotifications = async () => {
@@ -104,7 +47,6 @@ export default function HomeScreen() {
         alert('Brak zgody na notyfikacje');
         return;
       }
-
       const tokenData = await Notifications.getExpoPushTokenAsync();
       console.log('Expo Push Token:', tokenData.data);
     };
@@ -112,24 +54,16 @@ export default function HomeScreen() {
     registerForPushNotifications();
   }, []);
 
-  const fetchMyWeatherData = async () => {
-    let myCity = await getData('city');
-    let cityName = 'Warszawa';
-    if (myCity) cityName = myCity;
-    fetchWeatherForecast({
-      cityName,
-      days: '5',
-    }).then((data) => {
-      setWeather(data);
-    });
-  };
-  const handleTextDebounce = useCallback(debounce(handleSearch, 1200), []);
   const { current, location, forecast } = weather;
+
   return (
     <View style={[styles.container, isDarkMode && styles.containerDark]}>
       <StatusBar style={isDarkMode ? 'light' : 'dark'} />
       <SafeAreaView style={styles.safeArea}>
         <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           contentContainerStyle={{ paddingBottom: 140 }}
           showsVerticalScrollIndicator={false}
         >
@@ -159,26 +93,31 @@ export default function HomeScreen() {
             ) : null}
           </View>
           {isOffline && <Text style={styles.offlineSupport}>Tryb Offline</Text>}
-          <View style={styles.weatherContainer}>
-            <CurrentWeather
-              location={location}
-              current={current}
-              condition={current?.condition}
-            />
-            <DaysForecast
-              days={weather?.forecast?.forecastday}
-              icon={current}
-            />
-            <HoursForecast hours={weather?.forecast?.forecastday[0]?.hour} />
-            <WeatherStats weatStat={current} />
-            <View style={styles.rowContainer}>
-              <SunMoonBox
-                sunset={forecast?.forecastday[0]?.astro?.sunset}
-                sunrise={forecast?.forecastday[0]?.astro?.sunrise}
+          {loading ? (
+            <ActivityIndicator style={styles.activySupport} />
+          ) : error ? (
+            <Text style={styles.offlineSupport}>
+              Nie udało się pobrać danych pogodowych.
+            </Text>
+          ) : (
+            <View style={styles.weatherContainer}>
+              <CurrentWeather
+                location={location}
+                current={current}
+                condition={current?.condition}
               />
-              <AirQualityBox airQuality={current?.air_quality} />
+              <DaysForecast days={forecast?.forecastday} icon={current} />
+              <HoursForecast hours={forecast?.forecastday[0]?.hour} />
+              <WeatherStats weatStat={current} />
+              <View style={styles.rowContainer}>
+                <SunMoonBox
+                  sunset={forecast?.forecastday[0]?.astro?.sunset}
+                  sunrise={forecast?.forecastday[0]?.astro?.sunrise}
+                />
+                <AirQualityBox airQuality={current?.air_quality} />
+              </View>
             </View>
-          </View>
+          )}
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -193,12 +132,6 @@ const styles = StyleSheet.create({
   },
   containerDark: {
     backgroundColor: '#1e1e1e',
-  },
-  imageBackground: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    backgroundColor: 'rgb(51, 139, 211)',
   },
   safeArea: {
     flex: 1,
@@ -231,7 +164,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 20,
   },
-
   settingsButtonText: {
     color: 'white',
     fontSize: 14,
@@ -241,5 +173,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'red',
     marginBottom: 10,
+    marginTop: 20,
+  },
+  activySupport: {
+    size: 'large',
+    color: '#fff',
+    marginTop: 20,
   },
 });
