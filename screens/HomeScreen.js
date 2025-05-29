@@ -28,6 +28,7 @@ export default function HomeScreen() {
   const [showSearch, setSearch] = useState(false);
   const [locations, setLocations] = useState([]);
   const [weather, setWeather] = useState({});
+  const [isOffline, setIsOffline] = useState(false);
 
   const navigation = useNavigation();
   const { isDarkMode } = useTheme();
@@ -40,6 +41,7 @@ export default function HomeScreen() {
       days: '5',
     }).then((data) => {
       setWeather(data);
+      storeData('weatherData', data);
       storeData('city', loc.name);
     });
   };
@@ -52,6 +54,12 @@ export default function HomeScreen() {
   };
   useEffect(() => {
     (async () => {
+      const savedData = await getData('weatherData');
+      if (savedData) {
+        setWeather(savedData);
+        setIsOffline(true);
+      }
+
       try {
         const { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -76,6 +84,8 @@ export default function HomeScreen() {
 
         if (data) {
           setWeather(data);
+          setIsOffline(false);
+          storeData('weatherData', data);
           storeData('city', data.location.name);
         } else {
           fetchMyWeatherData();
@@ -148,6 +158,7 @@ export default function HomeScreen() {
               />
             ) : null}
           </View>
+          {isOffline && <Text style={styles.offlineSupport}>Tryb Offline</Text>}
           <View style={styles.weatherContainer}>
             <CurrentWeather
               location={location}
@@ -225,5 +236,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
     fontWeight: '500',
+  },
+  offlineSupport: {
+    textAlign: 'center',
+    color: 'red',
+    marginBottom: 10,
   },
 });
