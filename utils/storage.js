@@ -4,17 +4,22 @@ export const storeData = async (keyBy, value) => {
   try {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem(keyBy, jsonValue);
+    return true;
   } catch (error) {
-    console.log('error storeData', error);
+    console.error('error storeData', error);
+    throw error;
   }
 };
 
 export const getData = async (key) => {
   try {
     const jsonValue = await AsyncStorage.getItem(key);
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
+    return {
+      success: true,
+      data: jsonValue != null ? JSON.parse(jsonValue) : null,
+    };
   } catch (error) {
-    console.log('error getData', error);
-    return null;
+    console.error('error getData', error);
+    return { success: false, error };
   }
 };
