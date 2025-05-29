@@ -22,6 +22,7 @@ import { getData, storeData } from '../utils/storage';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../components/GlobalSettings/ThemeContext';
 import * as Location from 'expo-location';
+import * as Notifications from 'expo-notifications';
 
 export default function HomeScreen() {
   const [showSearch, setSearch] = useState(false);
@@ -84,6 +85,21 @@ export default function HomeScreen() {
         fetchMyWeatherData();
       }
     })();
+  }, []);
+
+  useEffect(() => {
+    const registerForPushNotifications = async () => {
+      const { status } = await Notifications.requestPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Brak zgody na notyfikacje');
+        return;
+      }
+
+      const tokenData = await Notifications.getExpoPushTokenAsync();
+      console.log('Expo Push Token:', tokenData.data);
+    };
+
+    registerForPushNotifications();
   }, []);
 
   const fetchMyWeatherData = async () => {
