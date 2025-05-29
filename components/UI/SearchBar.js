@@ -1,7 +1,23 @@
-import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
+import { useState } from 'react';
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Keyboard,
+} from 'react-native';
+import { MagnifyingGlassIcon, XMarkIcon } from 'react-native-heroicons/outline';
 
 export default function SearchBar({ showSearch, setSearch, onChangeText }) {
+  const [searchText, setSearchText] = useState('');
+
+  const handleClear = () => {
+    setSearchText('');
+    onChangeText('');
+  };
+  const handleSubmit = () => {
+    Keyboard.dismiss();
+  };
   return (
     <View
       style={[
@@ -15,15 +31,35 @@ export default function SearchBar({ showSearch, setSearch, onChangeText }) {
     >
       {showSearch ? (
         <TextInput
-          onChangeText={onChangeText}
+          value={searchText}
+          onChangeText={(text) => {
+            setSearchText(text);
+            onChangeText(text);
+          }}
           placeholder='Szukaj miasta'
           placeholderTextColor={'lightgray'}
           style={styles.input}
+          returnKeyType='search'
+          onSubmitEditing={handleSubmit}
+          accessibilityLabel='Pole wyszukiwania'
+          accessibilityHint='Wpisz nazwę miasta'
         />
       ) : null}
+      {showSearch && searchText.length > 0 && (
+        <TouchableOpacity
+          onPress={handleClear}
+          style={styles.clearButton}
+          accessibilityLabel='Wyczyść pole wyszukiwania'
+          accessibilityHint='Usuwa tekst z pola wyszukiwania'
+        >
+          <XMarkIcon size={20} color='black' />
+        </TouchableOpacity>
+      )}
       <TouchableOpacity
         onPress={() => setSearch(!showSearch)}
         style={styles.searchButton}
+        accessibilityLabel='Przycisk wyszukiwania'
+        accessibilityHint='Kliknij, aby pokazać lub ukryć pasek wyszukiwania'
       >
         <MagnifyingGlassIcon size={25} color='black' />
       </TouchableOpacity>
@@ -51,5 +87,9 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     padding: 12,
     margin: 4,
+  },
+  clearButton: {
+    padding: 8,
+    marginRight: 4,
   },
 });
