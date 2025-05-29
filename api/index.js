@@ -1,1 +1,3 @@
-export const apiKey = '460b8703882a4d64bff104527252005';
+import { WEATHER_API_KEY } from '@env';
+export const apiKey = WEATHER_API_KEY;
+export const weatherApi = 'https://api.weatherapi.com/v1';
