@@ -1,10 +1,23 @@
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet, ActivityIndicator } from 'react-native';
 
 export default function CurrentWeather({ location, current, condition }) {
+  const isLoading = !location || !current || !condition;
+
+  if (isLoading) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size='large' color='white' />
+        <Text style={styles.loadingText}>Ladowanie pogody...</Text>
+      </View>
+    );
+  }
   return (
     <>
       <Text style={styles.locationText}>
-        {location?.name},<Text style={styles.countryText}> {location?.country}</Text>
+        {location?.name || 'Brak miasta'},
+        <Text style={styles.countryText}>
+          {location?.country || 'Brak kraju'}
+        </Text>
       </Text>
       <View style={styles.weatherImageContainer}>
         <Image
@@ -14,7 +27,9 @@ export default function CurrentWeather({ location, current, condition }) {
         />
       </View>
       <View style={styles.weatherInfo}>
-        <Text style={styles.temperature}>{Math.round(current?.temp_c)}&#176;</Text>
+        <Text style={styles.temperature}>
+          {Math.round(current?.temp_c)}&#176;
+        </Text>
         <Text style={styles.description}>{condition?.text}</Text>
       </View>
     </>
@@ -57,5 +72,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
     marginBottom: 20,
+  },
+  loaderContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 50,
+  },
+  loadingText: {
+    marginTop: 10,
+    color: 'white',
+    fontSize: 16,
   },
 });
