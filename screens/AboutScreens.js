@@ -11,6 +11,10 @@ export default function AboutScreen() {
     { id: 4, title: '• Jakość powietrza (Air Quality)' },
     { id: 5, title: '• Wschód i zachód słońca' },
     { id: 6, title: '• Tryb jasny i ciemny (Dark Mode)' },
+    { id: 7, title: '• Tryb offline (obsługa braku internetu)' },
+    { id: 8, title: '• Powiadomienia push (Expo Notifications)' },
+    { id: 9, title: '• Ekrany: Ustawienia i O aplikacji' },
+    { id: 10, title: '• Lokalne ikonki pogodowe' },
   ];
   const allListItems = [
     { id: 1, title: '• React Native + Expo' },
@@ -19,6 +23,12 @@ export default function AboutScreen() {
     { id: 4, title: '• OpenWeatherMap API' },
     { id: 5, title: '• AsyncStorage' },
     { id: 6, title: '• Lodash (debounce)' },
+    { id: 7, title: '• Expo Notifications' },
+    { id: 8, title: '• Custom Hook (pobieranie pogody)' },
+    {
+      id: 9,
+      title: '• Lokalna mapa ikon pogodowych (mapowanie opisu na obraz)',
+    },
   ];
 
   return (
