@@ -1,7 +1,11 @@
 import { Text, View, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { weatherImages } from '../../api/index';
 
 export default function CurrentWeather({ location, current, condition }) {
   const isLoading = !location || !current || !condition;
+
+  const imageKey = condition?.text?.toLowerCase() || '';
+  const weatherIcon = weatherImages[imageKey] || weatherImages['other'];
 
   if (isLoading) {
     return (
@@ -20,11 +24,7 @@ export default function CurrentWeather({ location, current, condition }) {
         </Text>
       </Text>
       <View style={styles.weatherImageContainer}>
-        <Image
-          // source={require('../assets/images/cloudy-day.png')}
-          source={{ uri: 'https:' + condition?.icon }} ////////////    zmiana icon na tło
-          style={styles.weatherImage}
-        />
+        <Image source={weatherIcon} style={styles.weatherImage} />
       </View>
       <View style={styles.weatherInfo}>
         <Text style={styles.temperature}>
@@ -52,8 +52,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   weatherImage: {
-    width: 208,
+    width: 200,
     height: 208,
+    resizeMode: 'contain',
   },
   weatherInfo: {
     gap: 8,

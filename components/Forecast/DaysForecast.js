@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { CalendarDaysIcon } from 'react-native-heroicons/outline';
 import { useState } from 'react';
+import { weatherImages } from '../../api/index';
 
 export default function DaysForecast({ days, icon }) {
   const [showAll, setShowAll] = useState(false);
@@ -23,7 +24,7 @@ export default function DaysForecast({ days, icon }) {
       </View>
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
-        showsHorizontalScrollIndicator={true}
+        showsHorizontalScrollIndicator={false}
       >
         {daystoShow?.map((item, index) => {
           let date = new Date(item.date);
@@ -33,8 +34,10 @@ export default function DaysForecast({ days, icon }) {
           return (
             <View style={styles.forecastCard} key={index}>
               <Image
-                // source={require('../assets/images/rainy-day.png')}
-                source={{ uri: 'https:' + icon?.condition?.icon }}
+                source={
+                  weatherImages[item?.day?.condition?.text?.toLowerCase()] ||
+                  weatherImages['other']
+                }
                 style={styles.forecastImage}
               />
               <Text style={styles.forecastDay}>{dayName}</Text>

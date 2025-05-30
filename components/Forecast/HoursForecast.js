@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
 import { ClockIcon } from 'react-native-heroicons/outline';
+import { weatherImages } from '../../api/index';
 
 export default function HoursForecast({ hours }) {
   return (
@@ -19,8 +20,11 @@ export default function HoursForecast({ hours }) {
           <View key={index} style={styles.hourCard}>
             <Text style={styles.hourText}>{hourItem.time.split(' ')[1]}</Text>
             <Image
-              source={{ uri: 'https:' + hourItem.condition.icon }}
-              style={{ width: 40, height: 40 }}
+              source={
+                weatherImages[hourItem?.condition?.text?.toLowerCase()] ||
+                weatherImages['other']
+              }
+              style={styles.forecastImage}
             />
             <Text style={styles.tempText}>
               {Math.round(hourItem.temp_c)}&#176;
@@ -68,5 +72,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '500',
     marginTop: 4,
+  },
+  forecastImage: {
+    width: 40,
+    height: 40,
   },
 });
