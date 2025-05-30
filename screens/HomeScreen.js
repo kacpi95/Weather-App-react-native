@@ -22,6 +22,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../components/GlobalSettings/ThemeContext';
 import * as Notifications from 'expo-notifications';
 import UseWeather from '../CustomHook/UseWeather';
+import NavigationButtons from '../components/UI/NavigationButtons';
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -67,18 +68,6 @@ export default function HomeScreen() {
           contentContainerStyle={{ paddingBottom: 140 }}
           showsVerticalScrollIndicator={false}
         >
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Settings')}
-            style={styles.settingsButton}
-          >
-            <Text style={styles.settingsButtonText}>Ustawienia</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('About')}
-            style={styles.settingsButton}
-          >
-            <Text style={styles.settingsButtonText}>O aplikacji</Text>
-          </TouchableOpacity>
           <View style={styles.searchContainer}>
             <SearchBar
               showSearch={showSearch}
@@ -92,6 +81,7 @@ export default function HomeScreen() {
               />
             ) : null}
           </View>
+          <NavigationButtons />
           {isOffline && <Text style={styles.offlineSupport}>Tryb Offline</Text>}
           {loading ? (
             <ActivityIndicator style={styles.activySupport} />
@@ -154,20 +144,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 10,
     marginTop: 20,
-  },
-  settingsButton: {
-    alignSelf: 'flex-end',
-    marginTop: 40,
-    marginRight: 20,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 20,
-  },
-  settingsButtonText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: '500',
   },
   offlineSupport: {
     textAlign: 'center',
