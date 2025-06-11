@@ -20,19 +20,20 @@ Weather App is a simple and clean mobile application built with **React Native**
 ## 🖼️ Screenshots
 
 ### Login Screen  
-![Home Screen](screenshots/screenLogin.jpg)
+<img src="screenshots/screenLogin.jpg" alt="Login Screen" width="300"/>
 
 ### Home Screen  
-![Home Screen](screenshots/screenHome.jpg)
+<img src="screenshots/screenHome.jpg" alt="Home Screen" width="300"/>
 
 ### Home Screen Dark Mode  
-![Home Screen](screenshots/screenDarkMode.jpg)
+<img src="screenshots/screenDarkMode.jpg" alt="Dark Mode" width="300"/>
 
 ### Settings Screen  
-![Search Screen](screenshots/screenSettings.jpg)
+<img src="screenshots/screenSettings.jpg" alt="Settings Screen" width="300"/>
 
 ### About Screen  
-![Error Screen](screenshots/screenAbout.jpg)
+<img src="screenshots/screenAbout.jpg" alt="About Screen" width="300"/>
+
 
 ## 🛠️ Tech Stack
 
@@ -68,23 +69,27 @@ package.json
 
 1️⃣ Clone the repository:
 
-git clone <repository-url>
+#### git clone <repository-url>
 
 2️⃣ Install dependencies:
 
-npm install
-# or
-yarn install
+#### npm install
+
+ or
+
+#### yarn install
 
 3️⃣ Run the app:
 
-npx react-native run-android
-# or
+#### npx react-native run-android
 
-npx react-native run-ios
-# or
+ or
 
-npm run web
+#### npx react-native run-ios
+
+ or
+
+#### npm run web
 
 ## ⚠️ Notes
 
