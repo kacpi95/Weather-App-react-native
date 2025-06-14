@@ -24,6 +24,13 @@ import * as Notifications from 'expo-notifications';
 import UseWeather from '../CustomHook/UseWeather';
 import NavigationButtons from '../components/UI/NavigationButtons';
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 export default function HomeScreen() {
   const navigation = useNavigation();
   const { isDarkMode } = useTheme();
@@ -48,8 +55,13 @@ export default function HomeScreen() {
         alert('Brak zgody na notyfikacje');
         return;
       }
-      const tokenData = await Notifications.getExpoPushTokenAsync();
-      console.log('Expo Push Token:', tokenData.data);
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: 'Lokalna notyfikacja',
+          body: 'Lokalna notyfikacja!',
+        },
+        trigger: { seconds: 5 },
+      });
     };
 
     registerForPushNotifications();
