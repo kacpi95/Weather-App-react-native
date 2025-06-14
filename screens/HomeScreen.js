@@ -21,8 +21,9 @@ import SearchBar from '../components/UI/SearchBar';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../components/GlobalSettings/ThemeContext';
 import * as Notifications from 'expo-notifications';
-import UseWeather from '../CustomHook/UseWeather';
+import UseWeather from '../hooks/UseWeather';
 import NavigationButtons from '../components/UI/NavigationButtons';
+import { Alert } from 'react-native';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -52,7 +53,7 @@ export default function HomeScreen() {
     const registerForPushNotifications = async () => {
       const { status } = await Notifications.requestPermissionsAsync();
       if (status !== 'granted') {
-        alert('Brak zgody na notyfikacje');
+        Alert.alert('Brak zgody na notyfikacje');
         return;
       }
       await Notifications.scheduleNotificationAsync({
