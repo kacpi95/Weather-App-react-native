@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
   Text,
   RefreshControl,
   ActivityIndicator,
@@ -33,7 +32,6 @@ Notifications.setNotificationHandler({
   }),
 });
 export default function HomeScreen() {
-  const navigation = useNavigation();
   const { isDarkMode } = useTheme();
   const {
     weather,

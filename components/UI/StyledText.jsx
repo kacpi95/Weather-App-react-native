@@ -1,4 +1,4 @@
-import { Text, StyleSheet } from 'react-native';
+import { Text } from 'react-native';
 import { useTheme } from '../GlobalSettings/ThemeContext';
 
 export default function StyledText({ children, style }) {
