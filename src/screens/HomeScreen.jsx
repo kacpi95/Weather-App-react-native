@@ -9,20 +9,20 @@ import {
 } from 'react-native';
 import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import AirQualityBox from '../components/Weather/AirQualityBox';
-import SunMoonBox from '../components/Weather/SunMoonBox';
-import WeatherStats from '../components/Weather/WeatherStats';
-import HoursForecast from '../components/Forecast/HoursForecast';
-import DaysForecast from '../components/Forecast/DaysForecast';
-import CurrentWeather from '../components/Weather/CurrentWeather';
-import LocationList from '../components/UI/LocationList';
-import SearchBar from '../components/UI/SearchBar';
+import AirQualityBox from '../../components/Weather/AirQualityBox';
+import SunMoonBox from '../../components/Weather/SunMoonBox';
+import WeatherStats from '../../components/Weather/WeatherStats';
+import HoursForecast from '../../components/Forecast/HoursForecast';
+import DaysForecast from '../../components/Forecast/DaysForecast';
+import CurrentWeather from '../../components/Weather/CurrentWeather';
+import LocationList from '../../components/UI/LocationList';
+import SearchBar from '../../components/UI/SearchBar';
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from '../components/GlobalSettings/ThemeContext';
+import { useTheme } from '../../components/GlobalSettings/ThemeContext';
 import * as Notifications from 'expo-notifications';
-import NavigationButtons from '../components/UI/NavigationButtons';
+import NavigationButtons from '../../components/UI/NavigationButtons';
 import { Alert } from 'react-native';
-import useWeather from '../hooks/useWeather';
+import useWeather from '../../hooks/useWeather';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
