@@ -20,9 +20,9 @@ import SearchBar from '../components/UI/SearchBar';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../components/GlobalSettings/ThemeContext';
 import * as Notifications from 'expo-notifications';
-import UseWeather from '../hooks/UseWeather';
 import NavigationButtons from '../components/UI/NavigationButtons';
 import { Alert } from 'react-native';
+import useWeather from '../hooks/useWeather';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -45,7 +45,7 @@ export default function HomeScreen() {
     showSearch,
     setSearch,
     locations,
-  } = UseWeather();
+  } = useWeather();
 
   useEffect(() => {
     const registerForPushNotifications = async () => {

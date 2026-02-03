@@ -5,7 +5,7 @@ import debounce from 'lodash/debounce';
 import { fetchWeatherForecast, fetchLocations } from '../api/weatherApi';
 import { getData, storeData } from '../utils/storage';
 
-export default function UseWeather() {
+export default function useWeather() {
   const [locations, setLocations] = useState([]);
   const [weather, setWeather] = useState({});
   const [isOffline, setIsOffline] = useState(false);
@@ -42,11 +42,12 @@ export default function UseWeather() {
     };
   }, [debouncedSearch]);
 
-  const handleLocation = (loc) => {
+  const handleLocation = useCallback((loc) => {
     setLocations([]);
     setSearch(false);
     setLoading(true);
     setError(false);
+
     fetchWeatherForecast({ cityName: loc.name, days: '5' })
       .then((data) => {
         setWeather(data);
@@ -59,22 +60,27 @@ export default function UseWeather() {
         setError(true);
       })
       .finally(() => setLoading(false));
-  };
+  }, []);
 
-  const fetchMyWeatherData = async () => {
+  const fetchMyWeatherData = useCallback(async () => {
     try {
       setLoading(true);
+      setError(false);
+
       const cityName = (await getData('city')) || 'Warszawa';
       const data = await fetchWeatherForecast({ cityName, days: '5' });
+
       setWeather(data);
       setIsOffline(false);
+      storeData('weatherData', data);
+      storeData('city', cityName);
     } catch (err) {
       console.error('Błąd w fetchMyWeatherData:', err);
       setError(true);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const fetchInitialWeather = useCallback(async () => {
     const savedData = await getData('weatherData');
@@ -86,10 +92,8 @@ export default function UseWeather() {
 
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
+
       if (status !== 'granted') {
-        console.log(
-          'Brak dostępu do lokalizacji. Wczytywanie domyślnego miasta',
-        );
         await fetchMyWeatherData();
         return;
       }
@@ -105,19 +109,19 @@ export default function UseWeather() {
       setIsOffline(false);
       storeData('weatherData', data);
       storeData('city', data.location.name);
-    } catch (error) {
-      console.error('Błąd podczas pobierania lokalizacji:', error);
+    } catch (e) {
+      console.error('Błąd podczas pobierania lokalizacji:', e);
       await fetchMyWeatherData();
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [fetchMyWeatherData]);
 
-  const onRefresh = async () => {
+  const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await fetchMyWeatherData();
     setRefreshing(false);
-  };
+  }, [fetchMyWeatherData]);
 
   useEffect(() => {
     fetchInitialWeather();
