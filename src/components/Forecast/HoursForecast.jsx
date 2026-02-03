@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
 import { ClockIcon } from 'react-native-heroicons/outline';
-import { weatherImages } from '../../api/index';
+import { weatherImages } from '../../../api/index';
 
 export default function HoursForecast({ hours }) {
   return (

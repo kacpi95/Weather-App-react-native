@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { CalendarDaysIcon } from 'react-native-heroicons/outline';
 import { useState } from 'react';
-import { weatherImages } from '../../api/index';
+import { weatherImages } from '../../../api/index';
 
 export default function DaysForecast({ days, icon }) {
   const [showAll, setShowAll] = useState(false);

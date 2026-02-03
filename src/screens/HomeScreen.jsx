@@ -7,30 +7,20 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from 'react-native';
-import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import AirQualityBox from '../../components/Weather/AirQualityBox';
-import SunMoonBox from '../../components/Weather/SunMoonBox';
-import WeatherStats from '../../components/Weather/WeatherStats';
-import HoursForecast from '../../components/Forecast/HoursForecast';
-import DaysForecast from '../../components/Forecast/DaysForecast';
-import CurrentWeather from '../../components/Weather/CurrentWeather';
-import LocationList from '../../components/UI/LocationList';
-import SearchBar from '../../components/UI/SearchBar';
-import { useNavigation } from '@react-navigation/native';
-import { useTheme } from '../../components/GlobalSettings/ThemeContext';
-import * as Notifications from 'expo-notifications';
-import NavigationButtons from '../../components/UI/NavigationButtons';
-import { Alert } from 'react-native';
-import useWeather from '../../hooks/useWeather';
+import AirQualityBox from '../components/Weather/AirQualityBox';
+import SunMoonBox from '../components/Weather/SunMoonBox';
+import WeatherStats from '../components/Weather/WeatherStats';
+import HoursForecast from '../components/Forecast/HoursForecast';
+import DaysForecast from '../components/Forecast/DaysForecast';
+import CurrentWeather from '../components/Weather/CurrentWeather';
+import LocationList from '../components/UI/LocationList';
+import SearchBar from '../components/UI/SearchBar';
+import { useTheme } from '../components/GlobalSettings/ThemeContext';
+import NavigationButtons from '../components/UI/NavigationButtons';
+import useWeather from '../hooks/useWeather';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
+
 export default function HomeScreen() {
   const { isDarkMode } = useTheme();
   const {
@@ -47,24 +37,6 @@ export default function HomeScreen() {
     locations,
   } = useWeather();
 
-  useEffect(() => {
-    const registerForPushNotifications = async () => {
-      const { status } = await Notifications.requestPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('Brak zgody na notyfikacje');
-        return;
-      }
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: 'Lokalna notyfikacja',
-          body: 'Lokalna notyfikacja!',
-        },
-        trigger: { seconds: 5 },
-      });
-    };
-
-    registerForPushNotifications();
-  }, []);
 
   const { current, location, forecast } = weather;
 

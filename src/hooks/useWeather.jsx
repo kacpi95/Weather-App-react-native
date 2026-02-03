@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import * as Location from 'expo-location';
 import debounce from 'lodash/debounce';
 
-import { fetchWeatherForecast, fetchLocations } from '../api/weatherApi';
+import { fetchWeatherForecast, fetchLocations } from '../../api/weatherApi';
 import { getData, storeData } from '../utils/storage';
 
 export default function useWeather() {

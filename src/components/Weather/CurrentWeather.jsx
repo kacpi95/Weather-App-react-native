@@ -1,5 +1,5 @@
 import { Text, View, Image, StyleSheet, ActivityIndicator } from 'react-native';
-import { weatherImages } from '../../api/index';
+import { weatherImages } from '../../../api/index';
 
 export default function CurrentWeather({ location, current, condition }) {
   const isLoading = !location || !current || !condition;

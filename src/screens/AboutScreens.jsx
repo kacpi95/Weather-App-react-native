@@ -1,6 +1,6 @@
 import { View, StyleSheet, Text, Linking, ScrollView } from 'react-native';
-import { useTheme } from '../../components/GlobalSettings/ThemeContext';
-import StyledText from '../../components/UI/StyledText';
+import { useTheme } from '../components/GlobalSettings/ThemeContext';
+import StyledText from '../components/UI/StyledText';
 
 export default function AboutScreen() {
   const { isDarkMode } = useTheme();
