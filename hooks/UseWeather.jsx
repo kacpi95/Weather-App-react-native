@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
-import { fetchWeatherForecast, fetchLocations } from '../api/weatherApi';
-import { getData, storeData } from '../utils/storage';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import * as Location from 'expo-location';
 import debounce from 'lodash/debounce';
+
+import { fetchWeatherForecast, fetchLocations } from '../api/weatherApi';
+import { getData, storeData } from '../utils/storage';
 
 export default function UseWeather() {
   const [locations, setLocations] = useState([]);
@@ -13,14 +14,33 @@ export default function UseWeather() {
   const [refreshing, setRefreshing] = useState(false);
   const [showSearch, setSearch] = useState(false);
 
-  const handleSearch = async (value) => {
-    if (value.length > 2) {
-      const data = await fetchLocations({ cityName: value });
-      setLocations(data);
-    }
-  };
+  const handleSearch = useCallback(async (value) => {
+    try {
+      const query = value?.trim?.() ?? '';
 
-  const debouncedSearch = useCallback(debounce(handleSearch, 1200), []);
+      if (query.length <= 2) {
+        setLocations([]);
+        return;
+      }
+
+      const data = await fetchLocations({ cityName: query });
+      setLocations(Array.isArray(data) ? data : []);
+    } catch (e) {
+      setLocations([]);
+      console.error('Błąd wyszukiwania lokalizacji:', e);
+    }
+  }, []);
+
+  const debouncedSearch = useMemo(
+    () => debounce(handleSearch, 700),
+    [handleSearch],
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   const handleLocation = (loc) => {
     setLocations([]);
@@ -68,7 +88,7 @@ export default function UseWeather() {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         console.log(
-          'Brak dostępu do lokalizacji. Wczytywanie domyślnego miasta'
+          'Brak dostępu do lokalizacji. Wczytywanie domyślnego miasta',
         );
         await fetchMyWeatherData();
         return;
