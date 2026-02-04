@@ -10,10 +10,10 @@ import { CalendarDaysIcon } from 'react-native-heroicons/outline';
 import { useState } from 'react';
 import { weatherImages } from '../../../api/index';
 
-export default function DaysForecast({ days, icon }) {
+export default function DaysForecast({ days }) {
   const [showAll, setShowAll] = useState(false);
 
-  const daystoShow = showAll ? days : days?.slice(0, 3);
+  const daystoShow = showAll ? days?.slice(0, 5) : days?.slice(0, 3);
   return (
     <View style={styles.forecastContainer}>
       <View style={styles.forecastHeader}>

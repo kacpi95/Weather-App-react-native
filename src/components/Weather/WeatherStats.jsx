@@ -1,25 +1,25 @@
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function WeatherStats({ weatStat }) {
+export default function WeatherStats({ weatherStats }) {
   return (
     <View style={styles.statsContainer}>
       <View style={styles.statItem}>
         <Text style={styles.statText}>Wilgotność</Text>
-        <Text style={styles.statTextData}>{weatStat?.humidity}%</Text>
+        <Text style={styles.statTextData}>{weatherStats?.humidity}%</Text>
       </View>
       <View style={styles.statItem}>
         <Text style={styles.statText}>Odczuwalna</Text>
         <Text style={styles.statTextData}>
-          {Math.round(weatStat?.feelslike_c)}&#176;
+          {Math.round(weatherStats?.feelslike_c)}&#176;
         </Text>
       </View>
       <View style={styles.statItem}>
         <Text style={styles.statText}>Ciśnienie</Text>
-        <Text style={styles.statTextData}>{weatStat?.pressure_mb}mbar</Text>
+        <Text style={styles.statTextData}>{weatherStats?.pressure_mb}mbar</Text>
       </View>
       <View style={styles.statItem}>
         <Text style={styles.statText}>Szansa na deszcz</Text>
-        <Text style={styles.statTextData}>{weatStat?.precip_mm}%</Text>
+        <Text style={styles.statTextData}>{weatherStats?.precip_mm}%</Text>
       </View>
     </View>
   );

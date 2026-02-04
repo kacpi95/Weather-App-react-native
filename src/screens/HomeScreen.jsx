@@ -20,7 +20,6 @@ import { useTheme } from '../components/GlobalSettings/ThemeContext';
 import NavigationButtons from '../components/UI/NavigationButtons';
 import useWeather from '../hooks/useWeather';
 
-
 export default function HomeScreen() {
   const { isDarkMode } = useTheme();
   const {
@@ -36,7 +35,6 @@ export default function HomeScreen() {
     setSearch,
     locations,
   } = useWeather();
-
 
   const { current, location, forecast } = weather;
 
@@ -81,7 +79,7 @@ export default function HomeScreen() {
               />
               <DaysForecast days={forecast?.forecastday} icon={current} />
               <HoursForecast hours={forecast?.forecastday[0]?.hour} />
-              <WeatherStats weatStat={current} />
+              <WeatherStats weatherStats={current} />
               <View style={styles.rowContainer}>
                 <SunMoonBox
                   sunset={forecast?.forecastday[0]?.astro?.sunset}

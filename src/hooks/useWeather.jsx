@@ -67,7 +67,8 @@ export default function useWeather() {
       setLoading(true);
       setError(false);
 
-      const cityName = (await getData('city')) || 'Warszawa';
+      const storedCity = await getData('city');
+      const cityName = storedCity?.data || 'Warszawa';
       const data = await fetchWeatherForecast({ cityName, days: '5' });
 
       setWeather(data);
